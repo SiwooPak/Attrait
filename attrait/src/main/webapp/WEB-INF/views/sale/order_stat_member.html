@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>주문별 통계(회원별)</title>
+</head>
+<body>
+	<center>
+		<div id="menu">
+			<table>
+				<tr>
+					<th><a href="./sales_view.html">매출내역</a></th>
+					<th><a href="./sales_stat_day.html">매출통계(일별)</a></th>
+					<th><a href="./sales_stat_month.html">매출통계(월별)</a></th>
+					<th><a href="./sales_stat_product.html">매출통계(상품별)</a></th>
+					<th><a href="./order_stat_day.html">주문통계(일별)</a></th>
+					<th><a href="./order_stat_product.html">주문통계(상품별)</a></th>
+					<th><a href="./order_stat_member.html">주문통계(회원별)</a></th>
+					<th><a href="./order_stat_keyword.html">주문통계(키워드별)</a></th>
+					<th><a href="./order_stat_category.html">주문통계(카테고리별)</a></th>
+					<th><a href="./clame_stat.html">클레임통계</a></th>
+				</tr>
+			</table>
+		</div>
+		<div id="title">주문별 통계(회원별)</div>	
+		<div id="top">
+			<table>
+				<tr>
+					<th>매출일</th>
+					<td><input type="text" name="sales_start">~<input type="text" name="sales_stop"></td>
+					<th>상태</th>
+					<td>
+						<select name="state">
+							<option value="S01">주문완료</option>
+							<option value="S02">입금대기</option>
+							<option value="S03">입금완료</option>
+							<option value="S04">출고대기</option>
+							<option value="S05">출고완료</option>
+							<option value="S06">배송중</option>
+							<option value="S07">배송완료</option>
+						</select>
+					</td>
+					<th>주문번호/주문자</th>
+					<td><input type="text" name="orderNo">/<input type="text" name="customer"></td>
+				</tr>
+				<tr>
+					<th>주문일</th>
+					<td><input type="text" name="order_start">~<input type="text" name="order_stop"></td>
+					<th>입금일</th>
+					<td><input type="text" name="deposit_start">~<input type="text" name="deposit_stop"></td>
+					<th>출고일</th>
+					<td><input type="text" name="delivery_start">~<input type="text" name="delivery_stop"></td>
+				</tr>
+				<tr>
+					<th>환불일</th>
+					<td><input type="text" name="payback_start">~<input type="text" name="payback_stop"></td>
+					<th>주문/출고 구분</th>
+					<td>
+						<select name="orderDelivery">
+							<option value="O01">주문완료</option>
+							<option value="D01">출고완료</option>
+						</select>
+					</td>
+					<th>결제방법</th>
+					<td>
+						<select name="pay">
+							<option value="P01">카드결제</option>
+							<option value="P02">무통장입금</option>
+							<option value="P03">핸드폰결제</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>카테고리</th>
+					<td>
+						<select name="category">
+							<option value="A00">상의</option>
+							<option value="A01">티셔츠</option>
+							<option value="A02">블라우스</option>
+							<option value="A03">아우터</option>
+							<option value="B00">하의</option>
+							<option value="B01">반바지</option>
+							<option value="B02">청바지</option>
+							<option value="B03">치마</option>
+							<option value="C00">잡화</option>
+							<option value="C01">가방</option>
+							<option value="C02">신발</option>
+						</select>
+					</td>
+					<th>상품코드</th>
+					<td><input type="text" name="product_no"></td>
+					<th>상품명</th>
+					<td><input type="text" name="product_name"></td>
+				</tr>
+			</table>
+		</div>
+		<br>
+		<div id="content">
+			<textarea></textarea>
+		</div>
+	</center>
+</body>
+</html>
