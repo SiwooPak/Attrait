@@ -4,7 +4,8 @@
 	xmlns:p="http://www.springframework.org/schema/p" 
 	xmlns:aop="http://www.springframework.org/schema/aop"
     xmlns:tx="http://www.springframework.org/schema/tx"
-    xmlns:context="http://www.springframework.org/schema/context" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:task="http://www.springframework.org/schema/task" 
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -13,9 +14,18 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/context 
-    http://www.springframework.org/schema/context/spring-context.xsd"
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/task 
+    http://www.springframework.org/schema/task/spring-task-3.0.xsd"
 	>
-	 <!-- Transaction -->
+	<!-- Scheduler -->
+	<bean id="cartDelete" class="www.utility.attrait.Scheduler" />
+	<task:scheduler id="gsScheduler" pool-size="10" />
+ 	<task:executor id="gsTaskExecutor" pool-size="10" />
+ 	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler" />
+
+	 
+	<!-- Transaction -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     		<property name="dataSource" ref="dataSource"></property>
 	</bean>
@@ -81,26 +91,23 @@
         <property name="definitions"> 
             <list> 
                 <value>/WEB-INF/spring/tiles2exam.xml</value>
-                <value>/WEB-INF/spring/cart.xml</value>
                 <!-- 
+                <value>/WEB-INF/spring/cart.xml</value>
                 <value>/WEB-INF/spring/epoint_mng.xml</value> 
                 <value>/WEB-INF/spring/point.xml</value>
                 <value>/WEB-INF/spring/anu_board.xml</value>
                 <value>/WEB-INF/spring/reply.xml</value>
-                <value>/WEB-INF/spring/order_dt.xml</value>
                 <value>/WEB-INF/spring/order.xml</value>
                 <value>/WEB-INF/spring/user.xml</value>
                 <value>/WEB-INF/spring/sale_stat.xml</value>
                 <value>/WEB-INF/spring/admin_board.xml</value>
                 <value>/WEB-INF/spring/user_board.xml</value>
                 <value>/WEB-INF/spring/comment.xml</value>
-                <value>/WEB-INF/spring/pdt_dt.xml</value>
                 <value>/WEB-INF/spring/pdt.xml</value>
-                <value>/WEB-INF/spring/pdt_img.xml</value>
                 <value>/WEB-INF/spring/review.xml</value>
                 <value>/WEB-INF/spring/category.xml</value>
-                <value>/WEB-INF/spring/cmd.xml</value>
-                 -->
+                <value>/WEB-INF/spring/cmd.xml</value> 
+                -->
             </list> 
         </property> 
     </bean> 
