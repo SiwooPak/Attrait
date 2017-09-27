@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cart"> 
+
+	<!-- 장바구니 생성 -->
+	<insert id="create" parameterType="CartDTO">
+			INSERT INTO ATT_CART(
+				CARTNO, U_ID, PCODE, PNAME, COLOR, PSIZE, QUANTITY, 
+				PRICE, TOTAL, FNAME, WDATE) 
+			VALUES (
+			(SELECT NVL(MAX(CARTNO),0)+1 FROM ATT_CART)
+			, #{u_id}
+			, #{pcode}
+			, #{pname}
+			, #{color}
+			, #{psize}
+			, #{quantity}
+			, #{price}
+			, #{total}
+			, #{fname}
+			, sysdate
+			)
+	</insert>
+
+	<!-- 구매자의 장바구니 조회 -->
+	<select id="list" parameterType="map" resultType="map">
+		<![CDATA[
+			SELECT CART.CARTNO
+				 , CART.PCODE
+				 , CART.U_ID
+				 , CART.PRICE
+				 , CART.QUANTITY
+				 , CART.FNAME
+				 , PDT.WDATE
+			FROM  ATT_CART CART
+			INNER JOIN ATT_PDT PDT ON
+				  PDT.PCODE = CART.PCODE
+			WHERE 1=1
+				AND U_ID = #{u_id}
+			ORDER BY CARTNO DESC
+		]]>
+	</select>
+
+	<!-- 장바구니에 있는 상품 삭제 -->
+	<delete id="deleteProduct" parameterType="map">
+		<![CDATA[
+			DELETE
+			FROM  ATT_CART
+			WHERE CARTNO = #{cartno} and pcode = #{pcode}
+		]]>
+	</delete>
+	
+	<delete id="deleteCart">
+		<![CDATA[
+			DELETE
+			FROM  ATT_CART
+			WHERE to_char(wdate, 'yyyy-mm-dd hh24:mi:ss') < to_char(sysdate - 1/24, 'yyyy-mm-dd hh24:mi:ss')
+		]]>
+	</delete>
+	
+	<update id="update" parameterType="map">
+			UPDATE ATT_CART
+			<set>
+				<if test="quantity != null">quantity = #{quantity},</if>
+				<if test="psize != null">psize = #{psize},</if>
+				<if test="color != null">color = #{color}</if>
+			</set>	
+				WHERE CARTNO = #{cartno}
+	</update>
+	
+</mapper>

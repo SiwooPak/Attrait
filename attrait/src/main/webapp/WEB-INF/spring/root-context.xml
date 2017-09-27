@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context" 
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd"
+	>
+	 <!-- Transaction -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+       <tx:attributes>
+          <tx:method name="delete" rollback-for="Exception"/>
+          <tx:method name="reply" rollback-for="Exception"/>
+       </tx:attributes>
+    </tx:advice>
+ 
+    <aop:config>
+        <aop:pointcut id="transactionPointcut" expression="execution(* www.model.*.*Service.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointcut" />
+    </aop:config>
+	
+   	<context:component-scan base-package="www.model.*" use-default-filters="false"> 
+    	<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+      	<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+   	</context:component-scan> 
+   	
+	<!-- MyBatis--> 
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    		<property name="dataSource" ref="dataSource" />
+    		<property name="typeAliasesPackage" value="www.model" />
+    		<property name="mapperLocations" value="classpath:mybatis/*.xml" />
+  	</bean>
+ 
+  	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+    		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+  	</bean>
+  
+  	<!-- DB Connect(oracle) --> 	 
+	<bean id="dataSource" 
+		  destroy-method="close"
+		  class="org.apache.commons.dbcp.BasicDataSource" 
+	      p:driverClassName="oracle.jdbc.driver.OracleDriver" 
+		  p:url="jdbc:oracle:thin:@172.16.3.63:1521:XE" 
+	      p:username="soju"  
+	      p:password="1"  
+	/> 
+	
+	<!-- DB Connect(MySQL) -->
+	<!--  	 
+	<bean id="dataSource" 
+		  destroy-method="close"
+	      class="org.apache.commons.dbcp.BasicDataSource" 
+	      p:driverClassName="com.mysql.jdbc.Driver" 
+	      p:url="jdbc:mysql://localhost:3306/javadb?useUnicode=true&amp;characterEncoding=utf8" 
+	      p:username="siwoo"  
+	      p:password="931002"  
+	/>
+	 -->
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	</bean>
+		
+	<!-- Root Context: defines shared resources visible to all other web components --> 
+    <bean id="tilesconfigurer"  
+        class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"> 
+        <property name="definitions"> 
+            <list> 
+                <value>/WEB-INF/spring/tiles2exam.xml</value>
+                <value>/WEB-INF/spring/cart.xml</value>
+                <!-- 
+                <value>/WEB-INF/spring/epoint_mng.xml</value> 
+                <value>/WEB-INF/spring/point.xml</value>
+                <value>/WEB-INF/spring/anu_board.xml</value>
+                <value>/WEB-INF/spring/reply.xml</value>
+                <value>/WEB-INF/spring/order_dt.xml</value>
+                <value>/WEB-INF/spring/order.xml</value>
+                <value>/WEB-INF/spring/user.xml</value>
+                <value>/WEB-INF/spring/sale_stat.xml</value>
+                <value>/WEB-INF/spring/admin_board.xml</value>
+                <value>/WEB-INF/spring/user_board.xml</value>
+                <value>/WEB-INF/spring/comment.xml</value>
+                <value>/WEB-INF/spring/pdt_dt.xml</value>
+                <value>/WEB-INF/spring/pdt.xml</value>
+                <value>/WEB-INF/spring/pdt_img.xml</value>
+                <value>/WEB-INF/spring/review.xml</value>
+                <value>/WEB-INF/spring/category.xml</value>
+                <value>/WEB-INF/spring/cmd.xml</value>
+                 -->
+            </list> 
+        </property> 
+    </bean> 
+    
+    <bean id="viewResolver"  
+        class="org.springframework.web.servlet.view.UrlBasedViewResolver"> 
+        <property name="viewClass"> 
+            <value>org.springframework.web.servlet.view.tiles2.TilesView</value> 
+        </property> 
+        <property name="order" value="1"/>
+    </bean> 	
+		
+</beans>
