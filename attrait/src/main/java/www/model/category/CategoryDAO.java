@@ -17,39 +17,66 @@ public class CategoryDAO implements ICategoryDAO {
 	}
 
 	@Override
-	public List list(Map map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List list(Map map) throws Exception {  //paging 처리 안함
+		return mybatis.selectList("category.list_admin");
 	}
 
 	@Override
-	public boolean create(Object dto) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+	public List<CategoryDTO> list_main() throws Exception {
+		return mybatis.selectList("category.list_main");
 	}
 
 	@Override
-	public boolean update(Object dto) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean delete(Object pk) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+	public List<CategoryDTO> list_sub(String c_code) throws Exception {
+		return mybatis.selectList("category.list_sub");
 	}
 
 	@Override
 	public Object read(Object pk) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return mybatis.selectOne("category.read", pk);
 	}
 
 	@Override
-	public int total(Map map) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean create(Object dto) throws Exception {
+		return mybatis.insert("category.create", dto)>0;
+	}
+
+	@Override
+	public boolean update(Object dto) throws Exception {
+		return mybatis.update("category.update", dto)>0;
+	}
+
+	@Override
+	public boolean delete(Object pk) throws Exception {
+		return mybatis.delete("category.delete", pk)>0;
+	}
+
+	@Override
+	public int delete_sub(String parent_id) throws Exception {
+		return mybatis.delete("category.delete", parent_id);
+	}
+
+	@Override
+	public void update_sort_down(Map map) throws Exception {
+		mybatis.update("category.update_sort_down", map);
+	}
+
+
+	@Override
+	public boolean create_sub(CategoryDTO dto) throws Exception {
+		return mybatis.insert("category.create_sub", dto)>0;
+	}
+
+	@Override
+	public void update_sort_up(int sort_no) throws Exception {
+		mybatis.update("category.update_sort_up", sort_no);
 	}
 	
+//	구현x
+	@Override
+	public int total(Map map) throws Exception {
+		return 0;
+	}
+
+
 }

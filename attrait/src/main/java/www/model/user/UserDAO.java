@@ -13,6 +13,7 @@ public class UserDAO implements IUserDAO {
 	private SqlSessionTemplate mybatis;
 	
 	public void setMybatis(SqlSessionTemplate mybatis) {
+		
 		this.mybatis = mybatis;
 	}
 
@@ -50,6 +51,11 @@ public class UserDAO implements IUserDAO {
 	public int total(Map map) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public String login(Map map) {
+		return mybatis.selectOne("user.login",map);
 	}
 	
 }

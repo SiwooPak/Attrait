@@ -12,8 +12,8 @@ import org.springframework.core.io.Resource;
 import junit.framework.Assert;
 
 public class CartDAOTest {
-	
-	@Autowired
+	/*
+	  @Autowired
 	private static BeanFactory beans;
 	
 	@Autowired 
@@ -31,7 +31,7 @@ public class CartDAOTest {
 
 	@Before
 	public void setUp() throws Exception {
-			cartdao = (CartDAO)(beans.getBean("cartdao")); 
+			cartdao = (CartDAO)beans.getBean("cartdao"); 
 	}
 
 	@After
@@ -39,14 +39,14 @@ public class CartDAOTest {
 	}
 
 	@Test @Ignore
-	public void insertCartTest() throws Exception {
+	public void insertCartTest() {
 		System.out.println("cart insert test~");
 		CartDTO cartDTO = new CartDTO();
 		cartDTO.setU_id("user1");
 		cartDTO.setPcode("AAA001");
 		cartDTO.setColor("pink");
 		cartDTO.setPsize(90);
-		cartDTO.setPname("Ã»ï¿½ï¿½ï¿½ï¿½");
+		cartDTO.setPname("Ã»ÀÚÄÏ");
 		cartDTO.setPrice(50000);
 		cartDTO.setQuantity(2);
 		cartDTO.setTotal(100000);
@@ -55,7 +55,7 @@ public class CartDAOTest {
 	}
 	
 	@Test @Ignore
-	public void cart_listTest() throws Exception {
+	public void cart_listTest() {
 		System.out.println("cart list test~");
 		Map map = new HashMap();
 		String u_id = "user1";
@@ -65,7 +65,7 @@ public class CartDAOTest {
 	}
 	
 	@Test @Ignore
-	public void cart_updateTest() throws Exception{
+	public void cart_updateTest(){
 		System.out.println("cart update test~");
 		Map map = new HashMap();
 		map.put("quantity", 3);
@@ -76,7 +76,7 @@ public class CartDAOTest {
 	}
 	
 	@Test @Ignore
-	public void cart_productDelete() throws Exception{
+	public void cart_productDelete(){
 		System.out.println("cart product delete test~");
 		Map map = new HashMap();
 		map.put("cartno", 2);
@@ -84,10 +84,10 @@ public class CartDAOTest {
 		Assert.assertTrue(cartdao.delete(map));
 	}
 	
-	@Test @Ignore
+	@Test 
 	public void cart_Delete() throws Exception{
 		System.out.println("cart delete test~");
 		Assert.assertTrue(cartdao.delete());
 	}
-	
+	*/
 }

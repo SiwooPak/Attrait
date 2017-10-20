@@ -3,8 +3,10 @@ package www.model.cart;
 import www.model.pdt.PdtDTO;
 import www.model.user.UserDTO;
 
+
 public class CartDTO {
 	private int cartno;
+	
 	private String u_id;
 	private String pcode;
 	private String pname;
@@ -14,9 +16,23 @@ public class CartDTO {
 	private int quantity;
 	private int price;
 	private int total;
-	private UserDTO userDTO;
-	private PdtDTO pdtDTO;
 	
+	public CartDTO() {}
+	
+	public CartDTO(int cartno, String u_id, String pcode, String pname, String color, String fname, int psize,
+			int quantity, int price, int total) {
+		super();
+		this.cartno = cartno;
+		this.u_id = u_id;
+		this.pcode = pcode;
+		this.pname = pname;
+		this.color = color;
+		this.fname = fname;
+		this.psize = psize;
+		this.quantity = quantity;
+		this.price = price;
+		this.total = total;
+	}
 	
 	public int getCartno() {
 		return cartno;
@@ -72,24 +88,18 @@ public class CartDTO {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-	public UserDTO getUserDTO() {
-		return userDTO;
-	}
-	public void setUserDTO(UserDTO userDTO) {
-		this.userDTO = userDTO;
-	}
-	public PdtDTO getPdtDTO() {
-		return pdtDTO;
-	}
-	public void setPdtDTO(PdtDTO pdtDTO) {
-		this.pdtDTO = pdtDTO;
-	}
 	public String getFname() {
 		return fname;
 	}
 	public void setFname(String fname) {
 		this.fname = fname;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "CartDTO [cartno=" + cartno + ", u_id=" + u_id + ", pcode=" + pcode + ", pname=" + pname + ", color="
+				+ color + ", fname=" + fname + ", psize=" + psize + ", quantity=" + quantity + ", price=" + price
+				+ ", total=" + total + "]";
+	}
 	
 }

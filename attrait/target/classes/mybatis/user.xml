@@ -5,4 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="user"> <!-- ibatis에서 sqlMap자리가 mapper로 변경 -->
 
+	<select id="login" parameterType="Map" resultType="String">
+		select auth from att_user where u_id=#{u_id} and pw=#{pw} 
+	</select>
+	
 </mapper>

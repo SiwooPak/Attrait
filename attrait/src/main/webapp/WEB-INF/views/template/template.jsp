@@ -14,6 +14,10 @@
 <!-- 상단 메뉴 -->
 <tiles:insertAttribute name="header"/>
 <!-- 상단 메뉴 끝 -->
+
+<!-- banner -->
+<tiles:insertAttribute name="banner"/>
+<!-- banner 끝 -->
  
 <!-- 내용 시작 -->
 <tiles:insertAttribute name="body"/>

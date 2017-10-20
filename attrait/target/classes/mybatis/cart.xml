@@ -26,30 +26,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<!-- 구매자의 장바구니 조회 -->
-	<select id="list" parameterType="map" resultType="map">
+	<select id="list" parameterType="Map" resultType="CartDTO">
 		<![CDATA[
-			SELECT CART.CARTNO
-				 , CART.PCODE
-				 , CART.U_ID
-				 , CART.PRICE
-				 , CART.QUANTITY
-				 , CART.FNAME
-				 , PDT.WDATE
-			FROM  ATT_CART CART
-			INNER JOIN ATT_PDT PDT ON
-				  PDT.PCODE = CART.PCODE
-			WHERE 1=1
-				AND U_ID = #{u_id}
+			SELECT CARTNO
+				 , PCODE
+				 , U_ID
+				 , PRICE
+				 , QUANTITY
+				 , FNAME
+			FROM  ATT_CART
+			WHERE U_ID = #{u_id}
 			ORDER BY CARTNO DESC
 		]]>
 	</select>
 
 	<!-- 장바구니에 있는 상품 삭제 -->
-	<delete id="deleteProduct" parameterType="map">
+	<delete id="deleteProduct" parameterType="int">
 		<![CDATA[
 			DELETE
 			FROM  ATT_CART
-			WHERE CARTNO = #{cartno} and pcode = #{pcode}
+			WHERE CARTNO = #{cartno}
 		]]>
 	</delete>
 	
@@ -60,15 +56,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHERE to_char(wdate, 'yyyy-mm-dd hh24:mi:ss') < to_char(sysdate - 1/24, 'yyyy-mm-dd hh24:mi:ss')
 		]]>
 	</delete>
-	
-	<update id="update" parameterType="map">
-			UPDATE ATT_CART
-			<set>
-				<if test="quantity != null">quantity = #{quantity},</if>
-				<if test="psize != null">psize = #{psize},</if>
-				<if test="color != null">color = #{color}</if>
-			</set>	
-				WHERE CARTNO = #{cartno}
-	</update>
 	
 </mapper>

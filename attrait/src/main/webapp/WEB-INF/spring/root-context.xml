@@ -4,8 +4,7 @@
 	xmlns:p="http://www.springframework.org/schema/p" 
 	xmlns:aop="http://www.springframework.org/schema/aop"
     xmlns:tx="http://www.springframework.org/schema/tx"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:task="http://www.springframework.org/schema/task" 
+    xmlns:context="http://www.springframework.org/schema/context" 
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -14,33 +13,16 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/context 
-    http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/task 
-    http://www.springframework.org/schema/task/spring-task-3.0.xsd"
+    http://www.springframework.org/schema/context/spring-context.xsd"
 	>
-	<!-- Scheduler -->
-	<bean id="cartDelete" class="www.utility.attrait.Scheduler" />
-	<task:scheduler id="gsScheduler" pool-size="10" />
- 	<task:executor id="gsTaskExecutor" pool-size="10" />
- 	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler" />
-
-	 
-	<!-- Transaction -->
+	
+	<aop:aspectj-autoproxy/>
+	 <!-- Transaction -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-       <tx:attributes>
-          <tx:method name="delete" rollback-for="Exception"/>
-          <tx:method name="reply" rollback-for="Exception"/>
-       </tx:attributes>
-    </tx:advice>
- 
-    <aop:config>
-        <aop:pointcut id="transactionPointcut" expression="execution(* www.model.*.*Service.*(..))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointcut" />
-    </aop:config>
+	<tx:annotation-driven/>  <!-- 어노테이션을 이용한 트랜젝션 -->
 	
    	<context:component-scan base-package="www.model.*" use-default-filters="false"> 
     	<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
@@ -58,7 +40,8 @@
     		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
   	</bean>
   
-  	<!-- DB Connect(oracle) --> 	 
+  	<!-- DB Connect(oracle) --> 
+  		 
 	<bean id="dataSource" 
 		  destroy-method="close"
 		  class="org.apache.commons.dbcp.BasicDataSource" 
@@ -66,8 +49,21 @@
 		  p:url="jdbc:oracle:thin:@172.16.3.63:1521:XE" 
 	      p:username="soju"  
 	      p:password="1"  
-	/> 
+	/>
+	 
 	
+	<!-- 개인계정 !!주의 할점!!- 라인넘버 바뀌지 않게 주의요망 -->
+	<!-- 
+	<bean id="dataSource" 
+		  destroy-method="close"
+		  class="org.apache.commons.dbcp.BasicDataSource" 
+	      p:driverClassName="oracle.jdbc.driver.OracleDriver" 
+		  p:url="jdbc:oracle:thin:@127.0.0.1:1521:XE" 
+	      p:username=""  
+	      p:password=""  
+	/> 
+	 -->
+	 
 	<!-- DB Connect(MySQL) -->
 	<!--  	 
 	<bean id="dataSource" 
@@ -91,23 +87,21 @@
         <property name="definitions"> 
             <list> 
                 <value>/WEB-INF/spring/tiles2exam.xml</value>
-                <!-- 
-                <value>/WEB-INF/spring/cart.xml</value>
-                <value>/WEB-INF/spring/epoint_mng.xml</value> 
-                <value>/WEB-INF/spring/point.xml</value>
-                <value>/WEB-INF/spring/anu_board.xml</value>
-                <value>/WEB-INF/spring/reply.xml</value>
-                <value>/WEB-INF/spring/order.xml</value>
-                <value>/WEB-INF/spring/user.xml</value>
-                <value>/WEB-INF/spring/sale_stat.xml</value>
+                <!-- 시우 -->
+                <value>/WEB-INF/spring/sale.xml</value>
+                <!-- 현철 -->
                 <value>/WEB-INF/spring/admin_board.xml</value>
                 <value>/WEB-INF/spring/user_board.xml</value>
-                <value>/WEB-INF/spring/comment.xml</value>
+                <!-- 도형 -->
+                <value>/WEB-INF/spring/user.xml</value>
+                <!-- 정환 -->
                 <value>/WEB-INF/spring/pdt.xml</value>
-                <value>/WEB-INF/spring/review.xml</value>
-                <value>/WEB-INF/spring/category.xml</value>
-                <value>/WEB-INF/spring/cmd.xml</value> 
-                -->
+                <!-- 가람 -->
+                <value>/WEB-INF/spring/order.xml</value>
+                <!-- 은혜 -->
+                <value>/WEB-INF/spring/cart.xml</value>
+                
+                <value>/WEB-INF/spring/cmd.xml</value>
             </list> 
         </property> 
     </bean> 

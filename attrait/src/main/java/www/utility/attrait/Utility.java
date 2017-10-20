@@ -211,20 +211,15 @@ public class Utility {
 		 } 
 	
 	
-	public static String getCodeValue(String code){
+	public static String getCodeValue(Integer code){
 		String value = null;
 		Hashtable codes = new Hashtable(); 
 
-		codes.put("A01", "회사원");
-		codes.put("A02", "전산관련직");
-		codes.put("A03", "연구전문직");
-		codes.put("A04", "학생");
-		codes.put("A05", "일반자영업");
-		codes.put("A06", "공무원");
-		codes.put("A07", "의료인");
-		codes.put("A08", "법조인");
-		codes.put("A09", "종교/언론/예술인");
-		codes.put("A10", "기타");
+		codes.put(0, "주문취소");
+		codes.put(1, "주문완료");
+		codes.put(2, "배송중");
+		codes.put(3, "배송완료");
+		codes.put(4, "반품");
 		
 		value = (String)codes.get(code); 
 		return value; 

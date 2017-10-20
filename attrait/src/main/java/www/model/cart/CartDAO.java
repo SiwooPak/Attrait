@@ -25,11 +25,7 @@ public class CartDAO implements ICartDAO {
 	public boolean create(Object dto) throws Exception {
 		return mybatis.insert("cart.create", dto)>0;
 	}
-	
-	@Override
-	public boolean update(Object dto) throws Exception {
-		return mybatis.insert("cart.update", dto)>0;
-	}
+
 
 	@Override
 	public boolean delete(Object pk) throws Exception {
@@ -41,15 +37,21 @@ public class CartDAO implements ICartDAO {
 		return mybatis.delete("cart.deleteCart")>0;
 	}
 
-	@Override
-	public int total(Map map) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
+	
+	//구현 안함
 	@Override
 	public Object read(Object pk) throws Exception {
 		return null;
 	}
-		
+	@Override
+	public int total(Map map) throws Exception {
+		return 0;
+	}
+	@Override
+	public boolean update(Object dto) throws Exception {
+		return false;
+	}
+
+	
 }

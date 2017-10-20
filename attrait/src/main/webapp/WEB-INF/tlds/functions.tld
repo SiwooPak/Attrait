@@ -12,16 +12,16 @@
     <uri>/ELFunctions</uri>  <!-- 선언이되야지 tld파일을 가져다 쓸수 있다 -->
      
     <function>  <!-- EL에서 사용할 함수 정의 하나의 함수당 하나의 <function>객체에 매핑됩니다. --> 
-        <description>직업코드의 직업명령출력</description>
+        <description>주문상태</description>
         <!-- JSP에서 호출할 이름 --> 
-        <name>jobName</name>  <!-- <name>태그는 EL에서 사용할 함수의 이름 --> 
+        <name>orderStatus</name>  <!-- <name>태그는 EL에서 사용할 함수의 이름 --> 
         <!-- 호출하면 사용 -->
         <function-class>                   <!-- <function-class>함수의 기능을 제공할 클래스의  이름 --> 
             www.utility.attrait.Utility
         </function-class> 
         <function-signature>     <!-- <function-signature>함수 기능을 실행할 메소드를 명시 --> 
         	<!-- 리턴형			클래스명			 매개변수  -->
-            java.lang.String  getCodeValue( java.lang.String )<!-- 클래스타입은 무조건 패키지까지 넣어서 리턴형 매개변수까지 넣어줘야한다 --> 
+            java.lang.String  getCodeValue( java.lang.Integer )<!-- 클래스타입은 무조건 패키지까지 넣어서 리턴형 매개변수까지 넣어줘야한다 --> 
         </function-signature> 
     </function> 
     <function>  <!-- EL에서 사용할 함수 정의 하나이 함수당 하나의 <function>객체에 매핑됩니다. --> 

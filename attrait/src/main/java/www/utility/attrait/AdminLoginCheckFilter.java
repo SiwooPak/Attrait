@@ -26,7 +26,7 @@ public class AdminLoginCheckFilter implements Filter {
         
         if (session != null) { 
             if (session.getAttribute("id") != null  
-                    && session.getAttribute("grade").equals("A")) {
+                    && session.getAttribute("auth").equals("A")) {
                 login = true;  
             }
         }
@@ -36,7 +36,8 @@ public class AdminLoginCheckFilter implements Filter {
         } else {
 
             RequestDispatcher dispatcher = 
-                request.getRequestDispatcher("/member/login"); 
+                request.getRequestDispatcher("/user/login");
+            request.setAttribute("banner", "Login");
             dispatcher.forward(request, response); 
         }
     }

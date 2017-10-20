@@ -1,7 +1,8 @@
 package www.model.cart;
 
+import java.util.*;
 import www.DAOInter;
 
-public interface ICartDAO extends DAOInter{
+interface ICartDAO extends DAOInter{
 	boolean delete() throws Exception;
 }

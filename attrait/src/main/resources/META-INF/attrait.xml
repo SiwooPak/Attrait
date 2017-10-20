@@ -5,28 +5,37 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   					  http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="mdao" class="www.model.memo.MemoDAO" p:mybatis-ref="sqlSession" /> 
-	<bean id="adao" class="www.model.admin_board.Admin_BoardDAO" p:mybatis-ref="sqlSession" />
-	<bean id="andao" class="www.model.anu_board.Anu_BoardDAO" p:mybatis-ref="sqlSession" />
-	<bean id="cartdao" class="www.model.cart.CartDAO" p:mybatis-ref="sqlSession" />
-	<bean id="cdao" class="www.model.cmd.CmdDAO" p:mybatis-ref="sqlSession" />
-	<bean id="comdao" class="www.model.commnet.CommentDAO" p:mybatis-ref="sqlSession" />
-	<bean id="edao" class="www.model.epoint_mng.Epoint_MngDAO" p:mybatis-ref="sqlSession" />
-	<bean id="odao" class="www.model.order.OrderDAO" p:mybatis-ref="sqlSession" />
-	<bean id="pdao" class="www.model.pdt.PdtDAO" p:mybatis-ref="sqlSession" />
-	<bean id="podao" class="www.model.point.PointDAO" p:mybatis-ref="sqlSession" />
-	<bean id="rdao" class="www.model.reply.ReplyDAO" p:mybatis-ref="sqlSession" />
-	<bean id="redao" class="www.model.review.ReviewDAO" p:mybatis-ref="sqlSession" />
-	<bean id="sdao" class="www.model.sale.SaleDAO" p:mybatis-ref="sqlSession" />
-	<bean id="udao" class="www.model.user.UserDAO" p:mybatis-ref="sqlSession" />
-	<bean id="ubdao" class="www.model.user_board.User_BoardDAO" p:mybatis-ref="sqlSession" />
+<!-- 시우 -->
+<!-- 	<bean id="saleDAO" class="www.model.sale.SaleDAO" p:mybatis-ref="sqlSession" /> -->
 
+<!-- 현철 -->
+<!-- 	<bean id="admin_boardDAO" class="www.model.admin_board.Admin_BoardDAO" p:mybatis-ref="sqlSession" />
+	<bean id="user_boardDAO" class="www.model.user_board.User_BoardDAO" p:mybatis-ref="sqlSession" />
+	<bean id="commentDAO" class="www.model.comment.CommentDAO" p:mybatis-ref="sqlSession" /> -->
+
+<!-- 도형 -->
+<!-- 	<bean id="userDAO" class="www.model.user.UserDAO" p:mybatis-ref="sqlSession" /> -->
+
+<!-- 정환 -->
+<!-- 	<bean id="pdtDAO" class="www.model.pdt.PdtDAO" p:mybatis-ref="sqlSession" /> -->
+
+<!-- 가람 -->
+<!-- 	<bean id="orderDAO" class="www.model.order.OrderDAO" p:mybatis-ref="sqlSession" /> -->
+
+<!-- 은혜 -->
+	<bean id="categoryDAO" class="www.model.category.CategoryDAO" p:mybatis-ref="sqlSession" />
+    <bean id="cartDAO" class="www.model.cart.CartDAO" p:mybatis-ref="sqlSession" /> 
+<!-- 	<bean id="reviewDAO" class="www.model.review.ReviewDAO" p:mybatis-ref="sqlSession" />
+	
+	<bean id="cmdDAO" class="www.model.cmd.CmdDAO" p:mybatis-ref="sqlSession" /> -->
+	
+	
 	<!-- oracle --> 	 
 	<bean id="dataSource" 
 		  destroy-method="close"
 		  class="org.apache.commons.dbcp.BasicDataSource" 
 	      p:driverClassName="oracle.jdbc.driver.OracleDriver" 
-		  p:url="jdbc:oracle:thin:@127.0.0.1:1521:XE" 
+		  p:url="jdbc:oracle:thin:@172.16.3.63:1521:XE" 
 	      p:username="soju"  
 	      p:password="1"  
 	/> 

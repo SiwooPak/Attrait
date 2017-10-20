@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="category">
+
+	<select  id="list_admin" resultType="CategoryDTO"> 
+		select 
+			ccode,title,url,c_class,use_yn,sort_no,division,depth,parent_id
+		from att_category 
+		order by sort_no asc 
+	</select>
+	
+	<select id="list_main" resultType="CategoryDTO"> 
+		select 
+			ccode,title,url,c_class,use_yn,sort_no,division,depth,parent_id
+		from att_category 
+		where 	use_yn='Y'
+			and depth=1
+		order by sort_no asc
+	</select>
+
+	<select id="list_sub" resultType="CategoryDTO"> 
+		select 
+			ccode,title,url,c_class,use_yn,sort_no,division,depth,parent_id
+		from att_category
+		where	use_yn='Y'
+			and parent_id like #{parent_id} || '%'
+		order by sort_no asc 
+	</select>
+
+	<select id="read" parameterType="String" resultType="CategoryDTO">
+		select 
+			ccode,title,url,c_class,use_yn,sort_no,division,depth,parent_id
+		from att_category
+		where	ccode = #{ccode}
+	</select>
+	
+	<insert id="create" parameterType="CategoryDTO"> 
+		insert into att_category_test
+			(ccode,title,url,c_class,sort_no,division,depth,parent_id)
+		values
+			((select rpad(chr(ascii(substr(max(ccode),1,1))+1),3,'A') from att_category where depth=1),
+		  	#{title},#{url},#{c_class},
+		  	(select max(sort_no)+1 from att_category),#{division},1,null)
+	</insert>
+
+	<update id="update" parameterType="CategoryDTO"> 
+		update att_category 
+		set 
+			title = #{title},
+			url = #{url},
+			c_class = #{c_class},
+			use_yn = #{use_yn},
+			division = #{division}
+		where ccode = #{ccode}
+	</update>
+	
+	<delete id="delete" parameterType="String"> 
+		delete from att_category
+		where ccode = #{ccode} 
+	</delete>
+	
+	<delete id="delete_sub" parameterType="String"> 
+		delete from att_category
+		where parent_id like #{parent_id} || '%' 
+	</delete>
+	
+	<update id="update_sort_down" parameterType="Map">
+		update att_category
+		set
+			sort_no = sort_no-#{cnt}-1
+		where sort_no > #{sort_no}
+	</update>
+	
+	<insert id="create_sub" parameterType="CategoryDTO">
+		insert into att_category
+			(ccode,title,url,c_class,sort_no,division,depth,parent_id)
+		values
+			((select REPLACE(#{parent_id},'A', '') from dual)||(select rpad(chr(ascii(substr(nvl(max(ccode),'AAA'),#{depth},#{depth}))+1),3-#{depth}+1,'A') from att_category where parent_id=#{parent_id}),
+		  	#{title},#{url},#{c_class},
+		  	#{sort_no},#{division},#{depth},#{parent_id})
+	</insert>
+	
+	<update id="update_sort_up" parameterType="int">
+		update att_category_test
+		set
+			sort_no = sort_no+1
+		where sort_no >= #{sort_no}
+	</update>
+	
+</mapper>
