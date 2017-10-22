@@ -4,10 +4,35 @@
     "http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
 
 <tiles-definitions>
-
-	<definition name="/cart/list" extends="main"> 
-        <put-attribute name="title" value="Attrait _CART LIST" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/cart/list.jsp" /> 
+    
+	<definition name="admin" template="/WEB-INF/views/admin/template/template.jsp"> 
+       <put-attribute name="top" value="/WEB-INF/views/admin/template/top_menu.jsp" /> 
+       <put-attribute name="side" value="/WEB-INF/views/admin/template/sidebar.jsp" /> 
     </definition> 
-
+    
+   	<definition name="/admin/sale/sale_view" extends="admin"> 
+        <put-attribute name="title" value="Attrait_Sales_List" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/admin/sale/sale_view.jsp" /> 
+    </definition>
+    
+    <definition name="/admin/sale/sale_day" extends="admin"> 
+        <put-attribute name="title" value="Attrait_Sales_List(day)" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/admin/sale/sale_day.jsp" /> 
+    </definition>
+    
+    <definition name="/admin/sale/sale_month" extends="admin"> 
+        <put-attribute name="title" value="Attrait_Sales_List(month)" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/admin/sale/sale_month.jsp" /> 
+    </definition>
+    
+    <definition name="/admin/sale/sale_pdt" extends="admin"> 
+        <put-attribute name="title" value="Attrait_Sales_List(month)" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/admin/sale/sale_pdt.jsp" /> 
+    </definition>
+    
+    <definition name="/admin/sale/graphTest" extends="admin"> 
+        <put-attribute name="title" value="Attrait_Sales_List(month)" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/admin/sale/graphTest.jsp" /> 
+    </definition>
+	
 </tiles-definitions>

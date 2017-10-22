@@ -3,6 +3,105 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="sale"> 
+<mapper namespace="sale">
+<resultMap type="saleDTO" id="oneMap">
+	<result property="scode" column="scode" />
+	<result property="sqty" column="sqty" />
+	<result property="stotal" column="stotal" />
+	<result property="sdate" column="sdate" />
+	<result property="pcode" column="pcode" />
+	<result property="pdtdto.pcode" column="pcode2" />
+	<result property="pdtdto.pname" column="pname" />
+	<result property="pdtdto.inprice" column="inprice" />
+</resultMap>
+
+<select id="total" resultType="int">
+		select count(*) from att_sale
+    	<if test="col eq 'sdate'">
+      		where trunc(sdate) between to_date(#{from_date}, 'yy-mm-dd') and to_date(#{to_date}, 'yy-mm-dd')
+    	</if>
+</select>
+
+<select id="dayTotal" resultType="int">
+		select count(*) from att_sale_date
+</select>
+
+<select id="monthTotal" resultType="int">
+		select count(*) from att_sale_month
+</select>
+
+<select id="procductTotal" resultType="int">
+		select count(*) from att_sale_product
+</select>
+
+<select id="list" resultMap="oneMap">
+	SELECT s.sdate, s.sqty, s.pcode, p.pcode as pcode2 p.pname, p.inprice, r
+	FROM(
+	SELECT s.sdate, s.sqty, s.pcode, p.pname, p.inprice, rownum as r
+	FROM(
+	SELECT s.sdate, s.sqty, s.pcode, p.pname, p.inprice
+	FROM att_sale s, att_pdt p
+	order by s.sdate desc
+	<![CDATA[                                                                        
+  		))WHERE r>=#{sno} and r<=#{eno}  
+  	]]>
+</select>
+
+<select id="dayList" resultType="DSaleDTO">
+	SELECT dayno, today, day_qty, day_total, r
+	FROM(
+	SELECT dayno, today, day_qty, day_total, rownum as r
+	FROM(
+	SELECT dayno, today, day_qty, day_total
+	FROM att_sale_date
+	<where>
+			<if test="today">
+				trunc(today) between to_date(#{from_today}, 'yyyymmdd') and to_date(#{to_today}, 'yymmdd')
+			</if>
+	</where>
+	order by today desc                                                                      
+  <![CDATA[                                                                        
+  ))WHERE r>=#{sno} and r<=#{eno}  
+  ]]>
+</select>
+
+<select id="monthList" resultType="MSaleDTO">
+	SELECT mno, mon, mon_qty, mon_total, r
+	FROM(
+	SELECT mno, mon, mon_qty, mon_total, rownum as r
+	FROM(
+	SELECT mno, mon, mon_qty, mon_total
+	FROM att_sale_month
+	<where>
+			<if test="mon">
+				trunc(mon) between to_date(#{from_mon}, 'yyyymm') and to_date(#{to_mon}, 'yymm')
+			</if>
+	</where>
+	order by mon desc                                                                      
+  <![CDATA[                                                                        
+  ))WHERE r>=#{sno} and r<=#{eno}  
+  ]]>
+</select>
+
+<select id="productList" resultType="PSaleDTO">
+	SELECT ps.pno, ps,pcode, ps.pdt_qty, ps.pdt_total, p.name, p.inprice, r
+	FROM(
+	SELECT ps.pno, ps.pcode, ps.pdt_qty, ps.pdt_total, p.name, p.inprice, rownum as r
+	FROM(
+	SELECT ps.pno, ps.pcode, ps.pdt_qty, ps.pdt_total, p.name, p.inprice
+	FROM att_sale_product ps, att_pdt p 
+	order by pcode desc                                                                    
+  	<![CDATA[                                                                        
+  		))WHERE ps.pcode = p.pcode 
+  			and ps.pcode = {pcode}
+  			and r>=#{sno} and r<=#{eno}  
+  	]]>
+</select> 
+
+<select id="excelList" resultMap="oneMap">
+		SELECT s.scode, s.sdate, s.sqty,s.stotal, s.pcode, p.pcode as pcode2, p.pname, p.inprice
+		from att_sale s inner join att_pdt p on s.pcode = p.pcode
+		order by s.sdate desc                                        
+</select>
 
 </mapper>

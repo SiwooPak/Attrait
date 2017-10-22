@@ -3,43 +3,44 @@ package www.model.sale;
 import www.model.pdt.PdtDTO;
 
 public class SaleDTO {
-	private int ssno;
-	private int spoint;
+	private String scode;
 	private int sqty;
 	private int stotal;
 	private String sdate;
+	private String pcode;
 	private PdtDTO pdtdto;
 	
 	public SaleDTO(){
 		super();
 	}
 	
-	public SaleDTO(int ssno,int spoint, int sqty, int stotal, String sdate){
+	public SaleDTO(String scode, int sqty, int stotal, String sdate, String pcode, PdtDTO pdtdto) {
 		super();
-		this.ssno = ssno;
-		this.spoint = spoint;
+		this.scode = scode;
 		this.sqty = sqty;
 		this.stotal = stotal;
 		this.sdate = sdate;
+		this.pcode = pcode;
+		this.pdtdto = pdtdto;
 	}
-	public int getSsno() {
-		return ssno;
+	
+	
+	public String getScode() {
+		return scode;
 	}
-	public void setSsno(int ssno) {
-		this.ssno = ssno;
+
+	public void setScode(String scode) {
+		this.scode = scode;
 	}
-	/**
-	 * @return the spoint
-	 */
-	public int getSpoint() {
-		return spoint;
+
+	public String getPcode() {
+		return pcode;
 	}
-	/**
-	 * @param spoint the spoint to set
-	 */
-	public void setSpoint(int spoint) {
-		this.spoint = spoint;
+
+	public void setPcode(String pcode) {
+		this.pcode = pcode;
 	}
+
 	/**
 	 * @return the sqty
 	 */
@@ -81,6 +82,12 @@ public class SaleDTO {
 	}
 	public void setPdtdto(PdtDTO pdtdto) {
 		this.pdtdto = pdtdto;
+	}
+
+	@Override
+	public String toString() {
+		return "SaleDTO [scode=" + scode + ", sqty=" + sqty + ", stotal=" + stotal + ", sdate=" + sdate + ", pcode="
+				+ pcode + ", pdtdto=" + pdtdto + "]";
 	}
 	
 }
