@@ -76,7 +76,7 @@ td.w3-tiny {
 			</section>
 
 			<script type="text/javascript">
-
+/* 
 				$(document).ready(function() {
 					var member = [9, 8, 6, 8, 6];
 				    var album = [2, 3, 4, 10, 5];
@@ -96,7 +96,12 @@ td.w3-tiny {
 				        }
 				    });
 				});
-
+                 */
+                 $(document).ready(function() {
+                	 
+                	 
+                 }
+                 
 			</script>
 			<table class="w3-panel w3-bordered"
 				style="width: 100%; margin: 0 auto;">

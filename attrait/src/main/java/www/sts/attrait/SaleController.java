@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +47,7 @@ public class SaleController {
 		map.put("from_date", request.getParameter("from_date"));
 		
 		int totalRecord = dao.total(map); 
-		List<SaleDTO> list = dao.list();	
+		List<SaleDTO> list = dao.list(map);	
 		String paging = Utility.spaging("/admin/sale/sale_view", totalRecord, nowPage, recordPerPage);
 		
 		request.setAttribute("list", list);
@@ -57,9 +58,8 @@ public class SaleController {
 	}
 	
 	@RequestMapping(value="/exportToExcel", method=RequestMethod.POST)
-	public ModelAndView toExcel() throws Exception{
+	public ModelAndView toExcel(HttpServletRequest request) throws Exception{
 		ModelAndView mov = new ModelAndView();
-		List<SaleDTO> list = dao.list();
 		Calendar now = new GregorianCalendar();
 		int year = now.get(Calendar.YEAR);
 		int month = now.get(Calendar.MONTH) + 1;
@@ -70,7 +70,7 @@ public class SaleController {
 		int MILLISECOND = now.get(Calendar.MILLISECOND);
 		StringBuffer str = new StringBuffer();
 		str.append(year).append(month).append(day).append(hour).append(minute).append(second).append(MILLISECOND);
-		mov.addObject("list", list);
+		mov.addObject("list", request.getParameter("result_list"));
 		mov.addObject("filename", str);
 		mov.setViewName("/admin/sale/exportToExcel");
 		return mov;
@@ -97,10 +97,10 @@ public class SaleController {
 		map.put("sales_end", request.getParameter("sales_end"));
 		
 		int totalRecord = dao.total(map); 
-		List<SaleDTO> list = dao.list();	
+		//List<SaleDTO> list = dao.list();	
 		String paging = Utility.spaging("list", totalRecord, nowPage, recordPerPage);
 		
-		request.setAttribute("list", list);
+		//request.setAttribute("list", list);
 		request.setAttribute("nowPage", nowPage);
 		request.setAttribute("paging", paging);
 		
@@ -129,10 +129,10 @@ public class SaleController {
 		map.put("sales_end", request.getParameter("sales_end"));
 		
 		int totalRecord = dao.total(map); 
-		List<SaleDTO> list = dao.list();	
+		//List<SaleDTO> list = dao.list();	
 		String paging = Utility.spaging("list", totalRecord, nowPage, recordPerPage);
 		
-		request.setAttribute("list", list);
+		//request.setAttribute("list", list);
 		request.setAttribute("nowPage", nowPage);
 		request.setAttribute("paging", paging);
 		
@@ -160,10 +160,10 @@ public class SaleController {
 		map.put("sales_end", request.getParameter("sales_end"));
 		
 		int totalRecord = dao.total(map); 
-		List<SaleDTO> list = dao.list();	
+		//List<SaleDTO> list = dao.list();	
 		String paging = Utility.spaging("list", totalRecord, nowPage, recordPerPage);
 		
-		request.setAttribute("list", list);
+		//request.setAttribute("list", list);
 		request.setAttribute("nowPage", nowPage);
 		request.setAttribute("paging", paging);
 		

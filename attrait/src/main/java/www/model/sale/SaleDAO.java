@@ -39,8 +39,8 @@ public class SaleDAO implements ISaleDAO {
 	}
 
 	@Override
-	public List<SaleDTO> list() throws Exception {
-		return mybatis.selectList("sale.excelList");
+	public List<SaleDTO> list(Map map) throws Exception {
+		return mybatis.selectList("sale.list",map);
 	}
 	
 	@Override
@@ -56,12 +56,6 @@ public class SaleDAO implements ISaleDAO {
 	@Override
 	public List<PSaleDTO> productList(Map map) throws Exception {
 		return mybatis.selectList("sale.productList", map);
-	}
-
-	@Override
-	public List list(Map map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

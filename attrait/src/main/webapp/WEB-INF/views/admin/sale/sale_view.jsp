@@ -57,6 +57,7 @@ td.w3-tiny {
 					<th class="w3-black" width="13%">Sale_Date</th>
 					<td>
 						<form name="frm" action="" method="">
+							<input type="hidden" name="result_list" value="${list}">
 							<input type="hidden" name="col" value="sdate"> &nbsp; <input
 								type="text" name="from_date" size="10" id="date1">~<input
 								type="text" name="to_date" size="10" id="date2">

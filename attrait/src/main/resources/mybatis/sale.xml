@@ -24,6 +24,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <select id="dayTotal" resultType="int">
 		select count(*) from att_sale_date
+		<if test="col eq 'sdate'">
+      		where trunc(sdate) between to_date(#{from_day}, 'yy-mm-dd') and to_date(#{to_day}, 'yy-mm-dd')
+    	</if>
 </select>
 
 <select id="monthTotal" resultType="int">
@@ -35,16 +38,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 <select id="list" resultMap="oneMap">
+	select *
+	from(
+		select c.*, rownum as r 
+		from(
+			select s.sdate, s.sqty, s.pcode, p.pname, p.inprice
+			from att_sale s inner join att_pdt p on s.pcode = p.pcode
+			where trunc(s.sdate) between to_date(#{from_date}, 'yy-mm-dd') 
+ 			and to_date(#{to_date}, 'yy-mm-dd') 
+	    )c
+	)
+	<![CDATA[
+	where r>=#{sno} and r<=#{eno}
+	]]>
+	<!-- 
 	SELECT s.sdate, s.sqty, s.pcode, p.pcode as pcode2 p.pname, p.inprice, r
 	FROM(
-	SELECT s.sdate, s.sqty, s.pcode, p.pname, p.inprice, rownum as r
-	FROM(
-	SELECT s.sdate, s.sqty, s.pcode, p.pname, p.inprice
-	FROM att_sale s, att_pdt p
-	order by s.sdate desc
+		SELECT s.sdate, s.sqty, s.pcode, p.pname, p.inprice, rownum as r
+		FROM(
+			SELECT s.sdate, s.sqty, s.pcode, p.pname, p.inprice
+			FROM att_sale s, att_pdt p
+			order by s.sdate desc
 	<![CDATA[                                                                        
-  		))WHERE r>=#{sno} and r<=#{eno}  
+  			)
+  		)WHERE trunc(sdate) between to_date(#{from_date}, 'yyyymmdd') 
+  				and to_date(#{to_date}, 'yymmdd') 
+  				and r>=#{sno} and r<=#{eno}  
   	]]>
+  	 -->
 </select>
 
 <select id="dayList" resultType="DSaleDTO">
@@ -56,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	FROM att_sale_date
 	<where>
 			<if test="today">
-				trunc(today) between to_date(#{from_today}, 'yyyymmdd') and to_date(#{to_today}, 'yymmdd')
+				trunc(today) between to_date(#{from_date}, 'yyyymmdd') and to_date(#{to_date}, 'yymmdd')
 			</if>
 	</where>
 	order by today desc                                                                      
